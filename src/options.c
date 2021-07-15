@@ -99,6 +99,13 @@ int mm_set_opt(const char *preset, mm_idxopt_t *io, mm_mapopt_t *mo)
 		mo->suffixSampleOffset = mo->minPrefixLength = 1000; //reduced
 		mo->stage2_bw = 1000; //reduced (making it longer could break alignments near long SVs)
 		mo->prefixIncrementFactor = std::pow((mo->maxPrefixLength - 1) * 1.0/ mo->minPrefixLength, 0.33); //inc. levels
+        } else if (strcmp(preset, "map-pb-cifi") == 0) { //hifi hic
+                io->flag = 0, io->k = 15; io->w = 25;
+                mo->maxPrefixLength = mo->stage2_max_gap = 8000; //reduced
+                mo->suffixSampleOffset = mo->minPrefixLength = 100; //reduced
+                mo->SVawareMinReadLength = 1000; //reduced
+                mo->stage2_bw = 500; //reduced (making it longer could break alignments near long SVs)
+                mo->prefixIncrementFactor = std::pow((mo->maxPrefixLength - 1) * 1.0/ mo->minPrefixLength, 0.33); //inc. levels
 	} else if (strcmp(preset, "map-pb-clr") == 0) {
 		mo->SVaware = false; //turn off SV-aware mode for (relatively) short & noisy reads
 	} else if (strcmp(preset, "asm5") == 0) {
